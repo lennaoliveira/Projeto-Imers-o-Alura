@@ -1,0 +1,247 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyP2WCRDkkbIHGyhuJJFebYA",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/lennaoliveira/Projeto-Imers-o-Alura/blob/main/Projeto%20Alura\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "2-Gq9v9ElWLG"
+      },
+      "outputs": [],
+      "source": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "id": "ooGPbPBplPON"
+      },
+      "outputs": [],
+      "source": [
+        "!pip install -U -q google-generativeai"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Chave da API (substitua por seu valor)\n",
+        "api_key = \"AIzaSyDen5cvsxkzy1Tg-kGRKO2sbyaTBFlHjPs\"\n",
+        "\n",
+        "# Endpoint da API\n",
+        "endpoint = \"https://api.example.com/dengue\"\n",
+        "\n",
+        "# Cabeçalhos da requisição\n",
+        "headers = {\n",
+        "    \"Authorization\": f\"Bearer {api_key}\",\n",
+        "    \"Content-Type\": \"application/json\",\n",
+        "}\n",
+        "\n",
+        "# Parâmetros da requisição (opcional)\n",
+        "params = {\n",
+        "    \"municipio\": \"Caçapava\",  # Município de interesse\n",
+        "    \"estado\": \"SP\",  # Estado de interesse\n",
+        "    \"ano\": 2024,  # Ano de interesse\n",
+        "}\n",
+        "\n",
+        "# Faz a requisição à API\n",
+        "response = requests.get(endpoint, headers=headers, params=params)\n",
+        "\n",
+        "# Verifica se a requisição foi bem-sucedida\n",
+        "if response.status_code == 200:\n",
+        "    # Converte a resposta para JSON\n",
+        "    data = json.loads(response.text)\n",
+        "\n",
+        "    # Imprime os dados da dengue\n",
+        "    for caso in data[\"casos\"]:\n",
+        "        print(f\"Data: {caso['data']}\")\n",
+        "        print(f\"Local: {caso['municipio']}, {caso['estado']}\")\n",
+        "        print(f\"Tipo: {caso['tipo']}\")\n",
+        "        print(\"-\" * 20)\n",
+        "\n",
+        "else:\n",
+        "    # Erro na requisição\n",
+        "    print(f\"Erro na requisição: {response.status_code}\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 721
+        },
+        "id": "WwKsm0Hvpypk",
+        "outputId": "5fc8c7c8-9a67-497f-d3dc-949976e7e7d2"
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "ConnectionError",
+          "evalue": "HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /dengue?municipio=Ca%C3%A7apava&estado=SP&ano=2024 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x7d65b4ab4a00>: Failed to resolve 'api.example.com' ([Errno -2] Name or service not known)\"))",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mgaierror\u001b[0m                                  Traceback (most recent call last)",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connection.py\u001b[0m in \u001b[0;36m_new_conn\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m    202\u001b[0m         \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 203\u001b[0;31m             sock = connection.create_connection(\n\u001b[0m\u001b[1;32m    204\u001b[0m                 \u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_dns_host\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mport\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/util/connection.py\u001b[0m in \u001b[0;36mcreate_connection\u001b[0;34m(address, timeout, source_address, socket_options)\u001b[0m\n\u001b[1;32m     59\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 60\u001b[0;31m     \u001b[0;32mfor\u001b[0m \u001b[0mres\u001b[0m \u001b[0;32min\u001b[0m \u001b[0msocket\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgetaddrinfo\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mhost\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mport\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfamily\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0msocket\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mSOCK_STREAM\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     61\u001b[0m         \u001b[0maf\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0msocktype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mproto\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcanonname\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0msa\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mres\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/lib/python3.10/socket.py\u001b[0m in \u001b[0;36mgetaddrinfo\u001b[0;34m(host, port, family, type, proto, flags)\u001b[0m\n\u001b[1;32m    954\u001b[0m     \u001b[0maddrlist\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 955\u001b[0;31m     \u001b[0;32mfor\u001b[0m \u001b[0mres\u001b[0m \u001b[0;32min\u001b[0m \u001b[0m_socket\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgetaddrinfo\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mhost\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mport\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfamily\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mproto\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mflags\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    956\u001b[0m         \u001b[0maf\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0msocktype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mproto\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcanonname\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0msa\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mres\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mgaierror\u001b[0m: [Errno -2] Name or service not known",
+            "\nThe above exception was the direct cause of the following exception:\n",
+            "\u001b[0;31mNameResolutionError\u001b[0m                       Traceback (most recent call last)",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connectionpool.py\u001b[0m in \u001b[0;36murlopen\u001b[0;34m(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, preload_content, decode_content, **response_kw)\u001b[0m\n\u001b[1;32m    790\u001b[0m             \u001b[0;31m# Make the request on the HTTPConnection object\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 791\u001b[0;31m             response = self._make_request(\n\u001b[0m\u001b[1;32m    792\u001b[0m                 \u001b[0mconn\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connectionpool.py\u001b[0m in \u001b[0;36m_make_request\u001b[0;34m(self, conn, method, url, body, headers, retries, timeout, chunked, response_conn, preload_content, decode_content, enforce_content_length)\u001b[0m\n\u001b[1;32m    491\u001b[0m                 \u001b[0mnew_e\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0m_wrap_proxy_error\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mnew_e\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mconn\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mproxy\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mscheme\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 492\u001b[0;31m             \u001b[0;32mraise\u001b[0m \u001b[0mnew_e\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    493\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connectionpool.py\u001b[0m in \u001b[0;36m_make_request\u001b[0;34m(self, conn, method, url, body, headers, retries, timeout, chunked, response_conn, preload_content, decode_content, enforce_content_length)\u001b[0m\n\u001b[1;32m    467\u001b[0m             \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 468\u001b[0;31m                 \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_validate_conn\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mconn\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    469\u001b[0m             \u001b[0;32mexcept\u001b[0m \u001b[0;34m(\u001b[0m\u001b[0mSocketTimeout\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mBaseSSLError\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connectionpool.py\u001b[0m in \u001b[0;36m_validate_conn\u001b[0;34m(self, conn)\u001b[0m\n\u001b[1;32m   1096\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mconn\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mis_closed\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1097\u001b[0;31m             \u001b[0mconn\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mconnect\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   1098\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connection.py\u001b[0m in \u001b[0;36mconnect\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m    610\u001b[0m         \u001b[0msock\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0msocket\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msocket\u001b[0m \u001b[0;34m|\u001b[0m \u001b[0mssl\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mSSLSocket\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 611\u001b[0;31m         \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msock\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0msock\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_new_conn\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    612\u001b[0m         \u001b[0mserver_hostname\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mstr\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mhost\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connection.py\u001b[0m in \u001b[0;36m_new_conn\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m    209\u001b[0m         \u001b[0;32mexcept\u001b[0m \u001b[0msocket\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgaierror\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 210\u001b[0;31m             \u001b[0;32mraise\u001b[0m \u001b[0mNameResolutionError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mhost\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    211\u001b[0m         \u001b[0;32mexcept\u001b[0m \u001b[0mSocketTimeout\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mNameResolutionError\u001b[0m: <urllib3.connection.HTTPSConnection object at 0x7d65b4ab4a00>: Failed to resolve 'api.example.com' ([Errno -2] Name or service not known)",
+            "\nThe above exception was the direct cause of the following exception:\n",
+            "\u001b[0;31mMaxRetryError\u001b[0m                             Traceback (most recent call last)",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/requests/adapters.py\u001b[0m in \u001b[0;36msend\u001b[0;34m(self, request, stream, timeout, verify, cert, proxies)\u001b[0m\n\u001b[1;32m    485\u001b[0m         \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 486\u001b[0;31m             resp = conn.urlopen(\n\u001b[0m\u001b[1;32m    487\u001b[0m                 \u001b[0mmethod\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mrequest\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmethod\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connectionpool.py\u001b[0m in \u001b[0;36murlopen\u001b[0;34m(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, preload_content, decode_content, **response_kw)\u001b[0m\n\u001b[1;32m    844\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 845\u001b[0;31m             retries = retries.increment(\n\u001b[0m\u001b[1;32m    846\u001b[0m                 \u001b[0mmethod\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0murl\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0merror\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mnew_e\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0m_pool\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0m_stacktrace\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0msys\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mexc_info\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m2\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/util/retry.py\u001b[0m in \u001b[0;36mincrement\u001b[0;34m(self, method, url, response, error, _pool, _stacktrace)\u001b[0m\n\u001b[1;32m    514\u001b[0m             \u001b[0mreason\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0merror\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0mResponseError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcause\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 515\u001b[0;31m             \u001b[0;32mraise\u001b[0m \u001b[0mMaxRetryError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0m_pool\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0murl\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mreason\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mreason\u001b[0m  \u001b[0;31m# type: ignore[arg-type]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    516\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mMaxRetryError\u001b[0m: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /dengue?municipio=Ca%C3%A7apava&estado=SP&ano=2024 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x7d65b4ab4a00>: Failed to resolve 'api.example.com' ([Errno -2] Name or service not known)\"))",
+            "\nDuring handling of the above exception, another exception occurred:\n",
+            "\u001b[0;31mConnectionError\u001b[0m                           Traceback (most recent call last)",
+            "\u001b[0;32m<ipython-input-3-efe1b326ba85>\u001b[0m in \u001b[0;36m<cell line: 21>\u001b[0;34m()\u001b[0m\n\u001b[1;32m     19\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     20\u001b[0m \u001b[0;31m# Faz a requisição à API\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 21\u001b[0;31m \u001b[0mresponse\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mrequests\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mendpoint\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mheaders\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mheaders\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mparams\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mparams\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     22\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     23\u001b[0m \u001b[0;31m# Verifica se a requisição foi bem-sucedida\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/requests/api.py\u001b[0m in \u001b[0;36mget\u001b[0;34m(url, params, **kwargs)\u001b[0m\n\u001b[1;32m     71\u001b[0m     \"\"\"\n\u001b[1;32m     72\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 73\u001b[0;31m     \u001b[0;32mreturn\u001b[0m \u001b[0mrequest\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"get\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0murl\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mparams\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mparams\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     74\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     75\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/requests/api.py\u001b[0m in \u001b[0;36mrequest\u001b[0;34m(method, url, **kwargs)\u001b[0m\n\u001b[1;32m     57\u001b[0m     \u001b[0;31m# cases, and look like a memory leak in others.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     58\u001b[0m     \u001b[0;32mwith\u001b[0m \u001b[0msessions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mSession\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0msession\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 59\u001b[0;31m         \u001b[0;32mreturn\u001b[0m \u001b[0msession\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mrequest\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mmethod\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mmethod\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0murl\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0murl\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     60\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     61\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/requests/sessions.py\u001b[0m in \u001b[0;36mrequest\u001b[0;34m(self, method, url, params, data, headers, cookies, files, auth, timeout, allow_redirects, proxies, hooks, stream, verify, cert, json)\u001b[0m\n\u001b[1;32m    587\u001b[0m         }\n\u001b[1;32m    588\u001b[0m         \u001b[0msend_kwargs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mupdate\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0msettings\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 589\u001b[0;31m         \u001b[0mresp\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msend\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mprep\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0msend_kwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    590\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    591\u001b[0m         \u001b[0;32mreturn\u001b[0m \u001b[0mresp\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/requests/sessions.py\u001b[0m in \u001b[0;36msend\u001b[0;34m(self, request, **kwargs)\u001b[0m\n\u001b[1;32m    701\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    702\u001b[0m         \u001b[0;31m# Send the request\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 703\u001b[0;31m         \u001b[0mr\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0madapter\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msend\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mrequest\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    704\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    705\u001b[0m         \u001b[0;31m# Total elapsed time of the request (approximately)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/requests/adapters.py\u001b[0m in \u001b[0;36msend\u001b[0;34m(self, request, stream, timeout, verify, cert, proxies)\u001b[0m\n\u001b[1;32m    517\u001b[0m                 \u001b[0;32mraise\u001b[0m \u001b[0mSSLError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0me\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mrequest\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mrequest\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    518\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 519\u001b[0;31m             \u001b[0;32mraise\u001b[0m \u001b[0mConnectionError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0me\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mrequest\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mrequest\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    520\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    521\u001b[0m         \u001b[0;32mexcept\u001b[0m \u001b[0mClosedPoolError\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mConnectionError\u001b[0m: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /dengue?municipio=Ca%C3%A7apava&estado=SP&ano=2024 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x7d65b4ab4a00>: Failed to resolve 'api.example.com' ([Errno -2] Name or service not known)\"))"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import requests\n",
+        "import json\n",
+        "import os\n",
+        "\n",
+        "def obter_dados_dengue(municipio, estado, ano):\n",
+        "  \"\"\"Obtém dados de dengue de uma API.\n",
+        "\n",
+        "  Args:\n",
+        "    municipio: O município de interesse.\n",
+        "    estado: O estado de interesse.\n",
+        "    ano: O ano de interesse.\n",
+        "\n",
+        "  Returns:\n",
+        "    Uma lista de casos de dengue ou None em caso de erro.\n",
+        "  \"\"\"\n",
+        "  api_key = os.environ.get(\"API_KEY\")\n",
+        "  endpoint = \"https://api.example.com/dengue\"\n",
+        "\n",
+        "  headers = {\n",
+        "      \"Authorization\": f\"Bearer {api_key}\",\n",
+        "      \"Content-Type\": \"application/json\",\n",
+        "  }\n",
+        "\n",
+        "  params = {\n",
+        "      \"municipio\": municipio,\n",
+        "      \"estado\": estado,\n",
+        "      \"ano\": ano,\n",
+        "  }\n",
+        "\n",
+        "  response = requests.get(endpoint, headers=headers, params=params)\n",
+        "\n",
+        "  if response.status_code == 200:\n",
+        "    data = json.loads(response.text)\n",
+        "\n",
+        "    if \"casos\" in data:\n",
+        "      return data[\"casos\"]\n",
+        "    else:\n",
+        "      print(\"Erro: Estrutura da resposta da API inválida.\")\n",
+        "      return None\n",
+        "  else:\n",
+        "    print(f\"Erro na requisição: {response.status_code} - {response.text}\")\n",
+        "    return None\n",
+        "\n",
+        "\n",
+        "if __name__ == \"__main__\":\n",
+        "  casos_dengue = obter_dados_dengue(\"Caçapava\", \"SP\", 2024)\n",
+        "\n",
+        "  if casos_dengue:\n",
+        "    for caso in casos_dengue:\n",
+        "      print(f\"Data: {caso.get('data', 'N/A')}\")\n",
+        "      print(f\"Local: {caso.get('municipio', 'N/A')}, {caso.get('estado', 'N/A')}\")\n",
+        "      print(f\"Tipo: {caso.get('tipo', 'N/A')}\")\n",
+        "      print(\"-\" * 20)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 721
+        },
+        "id": "QDaYSk2opzrh",
+        "outputId": "9fec38fd-e004-4c5a-dae5-28a0acea2200"
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "ConnectionError",
+          "evalue": "HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /dengue?municipio=Ca%C3%A7apava&estado=SP&ano=2024 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x7d65b4ab7cd0>: Failed to resolve 'api.example.com' ([Errno -2] Name or service not known)\"))",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mgaierror\u001b[0m                                  Traceback (most recent call last)",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connection.py\u001b[0m in \u001b[0;36m_new_conn\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m    202\u001b[0m         \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 203\u001b[0;31m             sock = connection.create_connection(\n\u001b[0m\u001b[1;32m    204\u001b[0m                 \u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_dns_host\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mport\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/util/connection.py\u001b[0m in \u001b[0;36mcreate_connection\u001b[0;34m(address, timeout, source_address, socket_options)\u001b[0m\n\u001b[1;32m     59\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 60\u001b[0;31m     \u001b[0;32mfor\u001b[0m \u001b[0mres\u001b[0m \u001b[0;32min\u001b[0m \u001b[0msocket\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgetaddrinfo\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mhost\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mport\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfamily\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0msocket\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mSOCK_STREAM\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     61\u001b[0m         \u001b[0maf\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0msocktype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mproto\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcanonname\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0msa\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mres\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/lib/python3.10/socket.py\u001b[0m in \u001b[0;36mgetaddrinfo\u001b[0;34m(host, port, family, type, proto, flags)\u001b[0m\n\u001b[1;32m    954\u001b[0m     \u001b[0maddrlist\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m[\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 955\u001b[0;31m     \u001b[0;32mfor\u001b[0m \u001b[0mres\u001b[0m \u001b[0;32min\u001b[0m \u001b[0m_socket\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgetaddrinfo\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mhost\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mport\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mfamily\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mtype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mproto\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mflags\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    956\u001b[0m         \u001b[0maf\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0msocktype\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mproto\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mcanonname\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0msa\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mres\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mgaierror\u001b[0m: [Errno -2] Name or service not known",
+            "\nThe above exception was the direct cause of the following exception:\n",
+            "\u001b[0;31mNameResolutionError\u001b[0m                       Traceback (most recent call last)",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connectionpool.py\u001b[0m in \u001b[0;36murlopen\u001b[0;34m(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, preload_content, decode_content, **response_kw)\u001b[0m\n\u001b[1;32m    790\u001b[0m             \u001b[0;31m# Make the request on the HTTPConnection object\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 791\u001b[0;31m             response = self._make_request(\n\u001b[0m\u001b[1;32m    792\u001b[0m                 \u001b[0mconn\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connectionpool.py\u001b[0m in \u001b[0;36m_make_request\u001b[0;34m(self, conn, method, url, body, headers, retries, timeout, chunked, response_conn, preload_content, decode_content, enforce_content_length)\u001b[0m\n\u001b[1;32m    491\u001b[0m                 \u001b[0mnew_e\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0m_wrap_proxy_error\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mnew_e\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mconn\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mproxy\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mscheme\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 492\u001b[0;31m             \u001b[0;32mraise\u001b[0m \u001b[0mnew_e\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    493\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connectionpool.py\u001b[0m in \u001b[0;36m_make_request\u001b[0;34m(self, conn, method, url, body, headers, retries, timeout, chunked, response_conn, preload_content, decode_content, enforce_content_length)\u001b[0m\n\u001b[1;32m    467\u001b[0m             \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 468\u001b[0;31m                 \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_validate_conn\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mconn\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    469\u001b[0m             \u001b[0;32mexcept\u001b[0m \u001b[0;34m(\u001b[0m\u001b[0mSocketTimeout\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mBaseSSLError\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connectionpool.py\u001b[0m in \u001b[0;36m_validate_conn\u001b[0;34m(self, conn)\u001b[0m\n\u001b[1;32m   1096\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mconn\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mis_closed\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1097\u001b[0;31m             \u001b[0mconn\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mconnect\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   1098\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connection.py\u001b[0m in \u001b[0;36mconnect\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m    610\u001b[0m         \u001b[0msock\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0msocket\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msocket\u001b[0m \u001b[0;34m|\u001b[0m \u001b[0mssl\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mSSLSocket\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 611\u001b[0;31m         \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msock\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0msock\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_new_conn\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    612\u001b[0m         \u001b[0mserver_hostname\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mstr\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mhost\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connection.py\u001b[0m in \u001b[0;36m_new_conn\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m    209\u001b[0m         \u001b[0;32mexcept\u001b[0m \u001b[0msocket\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mgaierror\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 210\u001b[0;31m             \u001b[0;32mraise\u001b[0m \u001b[0mNameResolutionError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mhost\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    211\u001b[0m         \u001b[0;32mexcept\u001b[0m \u001b[0mSocketTimeout\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mNameResolutionError\u001b[0m: <urllib3.connection.HTTPSConnection object at 0x7d65b4ab7cd0>: Failed to resolve 'api.example.com' ([Errno -2] Name or service not known)",
+            "\nThe above exception was the direct cause of the following exception:\n",
+            "\u001b[0;31mMaxRetryError\u001b[0m                             Traceback (most recent call last)",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/requests/adapters.py\u001b[0m in \u001b[0;36msend\u001b[0;34m(self, request, stream, timeout, verify, cert, proxies)\u001b[0m\n\u001b[1;32m    485\u001b[0m         \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 486\u001b[0;31m             resp = conn.urlopen(\n\u001b[0m\u001b[1;32m    487\u001b[0m                 \u001b[0mmethod\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mrequest\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmethod\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/connectionpool.py\u001b[0m in \u001b[0;36murlopen\u001b[0;34m(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, preload_content, decode_content, **response_kw)\u001b[0m\n\u001b[1;32m    844\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 845\u001b[0;31m             retries = retries.increment(\n\u001b[0m\u001b[1;32m    846\u001b[0m                 \u001b[0mmethod\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0murl\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0merror\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mnew_e\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0m_pool\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0m_stacktrace\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0msys\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mexc_info\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m2\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/urllib3/util/retry.py\u001b[0m in \u001b[0;36mincrement\u001b[0;34m(self, method, url, response, error, _pool, _stacktrace)\u001b[0m\n\u001b[1;32m    514\u001b[0m             \u001b[0mreason\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0merror\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0mResponseError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcause\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 515\u001b[0;31m             \u001b[0;32mraise\u001b[0m \u001b[0mMaxRetryError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0m_pool\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0murl\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mreason\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mreason\u001b[0m  \u001b[0;31m# type: ignore[arg-type]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    516\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mMaxRetryError\u001b[0m: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /dengue?municipio=Ca%C3%A7apava&estado=SP&ano=2024 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x7d65b4ab7cd0>: Failed to resolve 'api.example.com' ([Errno -2] Name or service not known)\"))",
+            "\nDuring handling of the above exception, another exception occurred:\n",
+            "\u001b[0;31mConnectionError\u001b[0m                           Traceback (most recent call last)",
+            "\u001b[0;32m<ipython-input-4-1e60703254d6>\u001b[0m in \u001b[0;36m<cell line: 45>\u001b[0;34m()\u001b[0m\n\u001b[1;32m     44\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     45\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0m__name__\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0;34m\"__main__\"\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 46\u001b[0;31m   \u001b[0mcasos_dengue\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mobter_dados_dengue\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"Caçapava\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m\"SP\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;36m2024\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     47\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     48\u001b[0m   \u001b[0;32mif\u001b[0m \u001b[0mcasos_dengue\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m<ipython-input-4-1e60703254d6>\u001b[0m in \u001b[0;36mobter_dados_dengue\u001b[0;34m(municipio, estado, ano)\u001b[0m\n\u001b[1;32m     28\u001b[0m   }\n\u001b[1;32m     29\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 30\u001b[0;31m   \u001b[0mresponse\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mrequests\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mendpoint\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mheaders\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mheaders\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mparams\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mparams\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     31\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     32\u001b[0m   \u001b[0;32mif\u001b[0m \u001b[0mresponse\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mstatus_code\u001b[0m \u001b[0;34m==\u001b[0m \u001b[0;36m200\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/requests/api.py\u001b[0m in \u001b[0;36mget\u001b[0;34m(url, params, **kwargs)\u001b[0m\n\u001b[1;32m     71\u001b[0m     \"\"\"\n\u001b[1;32m     72\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 73\u001b[0;31m     \u001b[0;32mreturn\u001b[0m \u001b[0mrequest\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"get\"\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0murl\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mparams\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mparams\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     74\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     75\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/requests/api.py\u001b[0m in \u001b[0;36mrequest\u001b[0;34m(method, url, **kwargs)\u001b[0m\n\u001b[1;32m     57\u001b[0m     \u001b[0;31m# cases, and look like a memory leak in others.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     58\u001b[0m     \u001b[0;32mwith\u001b[0m \u001b[0msessions\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mSession\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0msession\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 59\u001b[0;31m         \u001b[0;32mreturn\u001b[0m \u001b[0msession\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mrequest\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mmethod\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mmethod\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0murl\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0murl\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     60\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     61\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/requests/sessions.py\u001b[0m in \u001b[0;36mrequest\u001b[0;34m(self, method, url, params, data, headers, cookies, files, auth, timeout, allow_redirects, proxies, hooks, stream, verify, cert, json)\u001b[0m\n\u001b[1;32m    587\u001b[0m         }\n\u001b[1;32m    588\u001b[0m         \u001b[0msend_kwargs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mupdate\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0msettings\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 589\u001b[0;31m         \u001b[0mresp\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msend\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mprep\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0msend_kwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    590\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    591\u001b[0m         \u001b[0;32mreturn\u001b[0m \u001b[0mresp\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/requests/sessions.py\u001b[0m in \u001b[0;36msend\u001b[0;34m(self, request, **kwargs)\u001b[0m\n\u001b[1;32m    701\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    702\u001b[0m         \u001b[0;31m# Send the request\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 703\u001b[0;31m         \u001b[0mr\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0madapter\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0msend\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mrequest\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwargs\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    704\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    705\u001b[0m         \u001b[0;31m# Total elapsed time of the request (approximately)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.10/dist-packages/requests/adapters.py\u001b[0m in \u001b[0;36msend\u001b[0;34m(self, request, stream, timeout, verify, cert, proxies)\u001b[0m\n\u001b[1;32m    517\u001b[0m                 \u001b[0;32mraise\u001b[0m \u001b[0mSSLError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0me\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mrequest\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mrequest\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    518\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 519\u001b[0;31m             \u001b[0;32mraise\u001b[0m \u001b[0mConnectionError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0me\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mrequest\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mrequest\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    520\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    521\u001b[0m         \u001b[0;32mexcept\u001b[0m \u001b[0mClosedPoolError\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mConnectionError\u001b[0m: HTTPSConnectionPool(host='api.example.com', port=443): Max retries exceeded with url: /dengue?municipio=Ca%C3%A7apava&estado=SP&ano=2024 (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x7d65b4ab7cd0>: Failed to resolve 'api.example.com' ([Errno -2] Name or service not known)\"))"
+          ]
+        }
+      ]
+    }
+  ]
+}
